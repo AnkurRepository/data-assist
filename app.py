@@ -4,6 +4,10 @@ from sqlalchemy import text
 from sqlalchemy import create_engine
 from db import get_engine
 from agent import get_agent
+from db import init_db
+
+init_db()
+
 
 # Page config
 st.set_page_config(page_title="Data Assist", layout="wide")
@@ -17,6 +21,31 @@ st.markdown("### Example questions:")
 st.write("- Show all employees")
 st.write("- Employees in HR department")
 st.write("- Top 3 highest salaries")
+
+# Initialize db
+def init_db():
+    with engine.connect() as conn:
+        conn.execute(text("""
+            CREATE TABLE IF NOT EXISTS employees (
+                name TEXT,
+                city TEXT,
+                salary INTEGER
+            )
+        """))
+
+
+        result = conn.execute(text("SELECT COUNT(*) FROM employees"))
+        count = result.scalar()
+
+        if count == 0:
+            conn.execute(text("""
+                INSERT INTO employees (name, city, salary) VALUES
+                ('Amit', 'Mumbai', 50000),
+                ('Neha', 'Delhi', 60000),
+                ('Raj', 'Delhi', 55000)
+            """))
+
+        conn.commit()
 
 
 # Initialize LLM and DB
