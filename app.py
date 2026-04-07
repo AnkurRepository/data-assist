@@ -22,7 +22,7 @@ st.write("- Top 3 highest salaries")
 # Initialize LLM and DB
 llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 # engine = get_engine()
-engine = create_engine("sqllite:///sample.db")
+engine = create_engine("sqlite:///sample.db")
 
 
 # Input Box
