@@ -1,6 +1,7 @@
 import streamlit as st
 from langchain_openai import ChatOpenAI
 from sqlalchemy import text
+from sqlalchemy import create_engine
 from db import get_engine
 from agent import get_agent
 
@@ -20,7 +21,8 @@ st.write("- Top 3 highest salaries")
 
 # Initialize LLM and DB
 llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
-engine = get_engine()
+# engine = get_engine()
+engine = create_engine("sqllite:///sample.db")
 
 
 # Input Box
