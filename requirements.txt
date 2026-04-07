@@ -1,6 +1,8 @@
 streamlit
+openai
 langchain
 langchain-openai
+langchain-community
 sqlalchemy
 pyodbc
 python-dotenv
