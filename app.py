@@ -6,7 +6,7 @@ from db import get_engine
 from agent import get_agent
 from db import init_db
 
-init_db()
+# init_db()
 
 
 # Page config
