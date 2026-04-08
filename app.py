@@ -19,10 +19,10 @@ st.title("⭐ Data Assist ⭐")
 # UI content
 st.markdown("### Ask questions about your database in natural language.")
 st.markdown("---")
-st.markdown("### Example questions:")
-st.write("- Show all employees")
-st.write("- Employees in HR department")
-st.write("- Top 3 highest salaries")
+st.markdown("### Querying table and its columns:")
+st.write("- Table: employee Columns: emp_id, name, city, salary, dept_id, job_id")
+st.write("- Table: department Columns: dept_id, dept_name")
+st.write("- Table: job Columns: job_id, job_title")
 
 
 # Initialize LLM 
