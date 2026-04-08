@@ -42,7 +42,14 @@ if st.button("Submit"):
                 You are a SQL Expert.
 
                 Database Schema: 
-                employees(name, city, salary)
+                employee(emp_id, name, city, salary, dept_id, job_id)
+                department(dept_id, dept_name)
+                job(job_id, job_title)
+
+                Relationships:
+                employee.dept_id = department.dept_id
+                employee.job_id = job.job_id
+
 
                 Note:
                 - "location", "place", "staying" all mean city
@@ -50,6 +57,7 @@ if st.button("Submit"):
                 Convert the following question into SQL query.
 
                 Rules:
+                - Use JOIN when needed
                 - Use only SELECT statements
                 - Do not explain anything
                 - Return only SQL query
