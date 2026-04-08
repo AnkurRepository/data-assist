@@ -19,11 +19,16 @@ st.title("⭐ Data Assist ⭐")
 # UI content
 st.markdown("### Ask questions about your database in natural language.")
 st.markdown("---")
-st.markdown("### Querying table and its columns:")
-st.write("- Table: employee Columns: emp_id, name, city, salary, dept_id, job_id")
-st.write("- Table: department Columns: dept_id, dept_name")
-st.write("- Table: job Columns: job_id, job_title")
-st.write("- Please stick your questions related to these tables only")
+
+st.markdown("### Available Tables & Columns:")
+
+st.markdown("""
+- Employee --> Emp_id, Name, City, Salary, Dept_id, Job_id
+- Department --> Dept_id, Dept_Name
+- Job --> Job_id, Job_Title          
+""")
+
+st.write("- Please ask questions related to the above tables only.")
 
 
 # Initialize LLM 
@@ -79,15 +84,33 @@ if st.button("Submit"):
                 st.subheader("Generated SQL:")
                 st.code(sql_query, language="sql")
 
-                st.subheader("Answer:")
-
                 if rows:
-                    for row in rows:
-                        try:
-                            st.write(dict(row._mapping))
-                        except:
-                            st.write(row)
+                    # Convert rows to list of dict
+                    data = [dict(row._mapping) for row in rows]
+
+                    # Natural Language Conversion
+                    nl_prompt = f"""
+                    You are a helpful assistant.
+
+                    Convert data result set into a natural language answer.
+
+                    Rules:
+                    - Keep it short
+                    - Do not show JSON
+                    - Answer clearly
+
+                    Question: {query}
+                    Data: {data}
+                    """
+
+                    final_answer = llm.invoke(nl_prompt).content.strip()
+
+                    # Show Output
+                    st.subheader("Answer:")
+                    st.write(final_answer)
+
                 else:
+                    st.subheader("Answer:")
                     st.info("No data found.")
 
                
