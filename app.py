@@ -23,6 +23,7 @@ st.markdown("### Querying table and its columns:")
 st.write("- Table: employee Columns: emp_id, name, city, salary, dept_id, job_id")
 st.write("- Table: department Columns: dept_id, dept_name")
 st.write("- Table: job Columns: job_id, job_title")
+st.write("- Please stick your questions related to these tables only")
 
 
 # Initialize LLM 
