@@ -1,6 +1,8 @@
 import streamlit as st
 from langchain_openai import ChatOpenAI
 from sqlalchemy import text
+from report import generate_report
+
 
 # import os
 # st.write("FILES:", os.listdir())
@@ -108,6 +110,11 @@ if st.button("Submit"):
                     # Show Output
                     st.subheader("Answer:")
                     st.write(final_answer)
+
+
+                    # Report Generation
+                    st.divider()
+                    generate_report(rows)
 
                 else:
                     st.subheader("Answer:")
