@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, text
 
-engine = create_engine("sqlite:///sample.db")
+engine = create_engine("sqlite:///sample.db", connect_args={"check_same_thread": False})
 
 def init_db():
     with engine.connect() as conn:

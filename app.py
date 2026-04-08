@@ -6,7 +6,7 @@ from sqlalchemy import text
 from db import init_db, engine # import both from db
 
 
-# Initialize DB
+# Initialize DB, Ensure DB is created BEFORE anything else
 init_db()
 
 
