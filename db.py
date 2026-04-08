@@ -45,12 +45,12 @@ def init_db():
                 (1,  'Amit',   'Mumbai',    50000, 1, 1),
                 (2,  'Neha',   'Delhi',     60000, 2, 2),
                 (3,  'Raj',    'Bangalore', 55000, 2, 2),
-                (4,  'Priya',  'Chennai',   52000, 3, 3)
-                (5,  'Karan',  'Mumbai',    58000, 1, 1)
-                (6,  'Sneha',  'Delhi',     61000, 2, 2)
-                (7,  'Vikram', 'Pune',      53000, 3, 3)
-                (8,  'Anjali', 'Hyderabad', 59000, 2, 2)
-                (9,  'Rohit',  'Mumbai',    62000, 1, 1)
+                (4,  'Priya',  'Chennai',   52000, 3, 3),
+                (5,  'Karan',  'Mumbai',    58000, 1, 1),
+                (6,  'Sneha',  'Delhi',     61000, 2, 2),
+                (7,  'Vikram', 'Pune',      53000, 3, 3),
+                (8,  'Anjali', 'Hyderabad', 59000, 2, 2),
+                (9,  'Rohit',  'Mumbai',    62000, 1, 1),
                 (10, 'Meena',  'Chennai',   54000, 3, 3)
             """))
 
