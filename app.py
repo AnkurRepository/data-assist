@@ -2,8 +2,8 @@ import streamlit as st
 from langchain_openai import ChatOpenAI
 from sqlalchemy import text
 
-import os
-st.write("FILES:", os.listdir())
+# import os
+# st.write("FILES:", os.listdir())
 
 from db import init_db, engine # import both from db
 
