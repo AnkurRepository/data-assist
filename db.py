@@ -41,7 +41,7 @@ def init_db():
 
         if count == 0:
             conn.execute(text("""
-                INSERT INTO employees (emp_id, name, city, salary, dept_id, job_id) VALUES
+                INSERT INTO employee (emp_id, name, city, salary, dept_id, job_id) VALUES
                 (1,  'Amit',   'Mumbai',    50000, 1, 1),
                 (2,  'Neha',   'Delhi',     60000, 2, 2),
                 (3,  'Raj',    'Bangalore', 55000, 2, 2),
