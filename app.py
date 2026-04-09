@@ -81,7 +81,7 @@ with col3:
 
 
 # Button
-if st.button("Submit"):
+if st.button("Submit", key="submit_btn"):
     if query:
         with st.spinner("Thinking....."):
             try:
