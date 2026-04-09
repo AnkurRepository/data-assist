@@ -41,21 +41,21 @@ col1, col2, col3 = st.columns(3)
 
 with col1:
     if st.button("Show all employees"):
-        query = "Show all employees"
+        st.session_state.query = "Show all employees"
 
     if st.button("Top salary employee"):
-        query = "Who has the highest salary?"
+        st.session_state.query = "Who has the highest salary?"
 
 with col2:
     if st.button("Employees in IT"):
-        query = "Show all employees in IT department"
+        st.session_state.query = "Show all employees in IT department"
     
     if st.button("Salary by department"):
-        query = "Show total salary by department"
+        st.session_state.query = "Show total salary by department"
 
 with col3:
     if st.button("Employee + Department + Job"):
-        query = "Show employee name with department and job title"
+        st.session_state.query = "Show employee name with department and job title"
 
 
 
