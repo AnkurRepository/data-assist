@@ -32,36 +32,7 @@ st.write("- Please ask questions related to the above tables only.")
 llm = ChatOpenAI(model="gpt-4o-mini", temperature = 0)
 
 # Input Box
-query = st.text_input("Ask your question:", key="query")
-
-# Examples Buttons
-st.markdown("Try these examples")
-
-col1, col2, col3 = st.columns(3)
-
-with col1:
-    if st.button("Show all employees"):
-        st.session_state.query = "Show all employees"
-
-
-    if st.button("Top salary employee"):
-        st.session_state.query = "Who has the highest salary?"
-
-
-with col2:
-    if st.button("Employees in IT"):
-        st.session_state.query = "Show all employees in IT department"
-
-    
-    if st.button("Salary by department"):
-        st.session_state.query = "Show total salary by department"
-
-
-with col3:
-    if st.button("Employee + Department + Job"):
-        st.session_state.query = "Show employee name with department and job title"
-
-
+query = st.text_input("Ask your question:")
 
 
 # Button
