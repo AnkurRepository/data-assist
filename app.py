@@ -2,12 +2,28 @@ import streamlit as st
 from langchain_openai import ChatOpenAI
 from sqlalchemy import text
 from report import generate_report
-
-
-# import os
-# st.write("FILES:", os.listdir())
-
 from db import init_db, engine # import both from db
+
+st.markdown("""
+<style>
+/* Style the submit button */
+div.stButton > button:first-child{
+    background-color:  #4CAF50; /* Green */
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    height: 3em;
+    width: 100%
+}
+
+/* Hover effect  */
+div.stButton > button:first-child:hover {
+    background-color: #45a049;
+    color: white;
+}
+</style>
+""", unsafe_allow_html=True
+)
 
 
 # Initialize DB, Ensure DB is created BEFORE anything else
