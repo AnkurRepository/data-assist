@@ -8,10 +8,10 @@ def extract_text(url):
         response = requests.get(url, timeout=10)
         soup = BeautifulSoup(response.text, "html.parser")
 
-        for script in soup(["script", "style"]):
-            script.extract()
+        paragraphs = soup.find_all("p")
+        text = " ".join([p.get_text() for p in paragraphs])
 
-        return soup.get_text(separator= " ")
+        return text
 
     except Exception as e:
         return f"Error: {str(e)}"
@@ -20,12 +20,16 @@ def process_url_query(url, question):
     content = extract_text(url)
 
     # limit content
-    content = content[:3000]
+    content = content[:8000]
 
     llm = ChatOpenAI(temperature=0)
 
     prompt = f"""
-    Answer the question based on the below content: 
+    You are answering based on the webpage content.
+
+    Find the exact answer from the content.
+    If the answer exists, return it directly
+    Do Not say information is missing unless truly absent
 
     {content}
 
