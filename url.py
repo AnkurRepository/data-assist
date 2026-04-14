@@ -16,25 +16,42 @@ def extract_text(url):
     except Exception as e:
         return f"Error: {str(e)}"
 
+def get_relevant_content(content, question):
+    keywords = [w for w in question.lower().split() if len(w) > 3]
+
+    sentences = content.split(".")
+    relevant = []
+
+    for s in sentences:
+        if any(k in s.lower() for k in keywords):
+            relevant.append(s)
+            
+    return ". ".join(relevant[:10])
+
+
 def process_url_query(url, question):
     content = extract_text(url)
 
     # limit content
     content = content[:8000]
 
+    # get relevant content
+    filtered_content = get_relevant_content(content, question)
+
     llm = ChatOpenAI(temperature=0)
 
     prompt = f"""
-    Answer the questions ONLY using the provided content
+    You must answer only from the provided content.
 
-    Find the exact answer from the content.
-    If the answer exists, return it directly
-    If the answer is not found in the content, say:
+    Rules:
+    - Do Not guess
+    - Do Not use outside language
+    - If answer is not clearly present, say:
     "I could not find the answer in the provided content."
 
     Do NOT guess or make up the answers.
 
-    {content}
+    {filtered_content}
 
     Question = {question}
     """
