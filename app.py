@@ -13,9 +13,15 @@ init_db()
 st.set_page_config(page_title="Data Assist", layout="wide")
 st.title("⭐ Data Assist ⭐")
 
+# Mode selection
+option = st.radio(
+    "Select data source:",
+    ("Database", "URL")
+)
 # UI content
 st.markdown("### Ask questions about your database in natural language.")
 st.markdown("---")
+
 
 st.markdown("### Available Tables & Columns:")
 
@@ -24,6 +30,7 @@ st.markdown("""
 - Department --> Dept_id, Dept_Name
 - Job --> Job_id, Job_Title          
 """)
+
 
 st.write("- Please ask questions related to the above tables only.")
 
@@ -34,8 +41,10 @@ llm = ChatOpenAI(model="gpt-4o-mini", temperature = 0)
 # Input Box
 query = st.text_input("Ask your question:")
 
+# Submit Button
+if st.button("Submit"):
+    if not url
 
-# Button
 if st.button("Submit"):
     if query:
         with st.spinner("Thinking....."):
