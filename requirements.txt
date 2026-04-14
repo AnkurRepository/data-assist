@@ -8,3 +8,5 @@ pysqlite3-binary
 pyodbc
 python-dotenv
 pandas
+requests
+beautifulsoup4
