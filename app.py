@@ -3,6 +3,7 @@ from langchain_openai import ChatOpenAI
 from sqlalchemy import text
 from report import generate_report
 from db import init_db, engine # import both from db
+from url import process_url_query
 
 
 # Initialize DB, Ensure DB is created BEFORE anything else
@@ -136,7 +137,7 @@ if option == "Database":
 
 elif option == "URL":
 
-    st.markdown("Please enter the URL and ask questions related to it.")
+    st.write("Please enter the URL and ask questions related to it.")
 
     url = st.text_input("Enter URL")
     question = st.text_input("Ask your question:")
@@ -147,6 +148,7 @@ elif option == "URL":
         elif not question:
             st.warning("Please enter a question.")
         else:
-            st.success("URL mode will be implemented next.")
+            result = process_url_query(url, question)
+            st.info(result)
             
 
