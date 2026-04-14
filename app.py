@@ -13,118 +13,140 @@ init_db()
 st.set_page_config(page_title="Data Assist", layout="wide")
 st.title("⭐ Data Assist ⭐")
 
-# Mode selection
+# Radio button
 option = st.radio(
     "Select data source:",
     ("Database", "URL")
 )
-# UI content
-st.markdown("### Ask questions about your database in natural language.")
-st.markdown("---")
-
-
-st.markdown("### Available Tables & Columns:")
-
-st.markdown("""
-- Employee --> Emp_id, Name, City, Salary, Dept_id, Job_id
-- Department --> Dept_id, Dept_Name
-- Job --> Job_id, Job_Title          
-""")
-
-
-st.write("- Please ask questions related to the above tables only.")
-
 
 # Initialize LLM 
 llm = ChatOpenAI(model="gpt-4o-mini", temperature = 0)
 
-# Input Box
-query = st.text_input("Ask your question:")
+# =================================================
+# Database Mode
+# =================================================
 
-# Submit Button
-if st.button("Submit"):
-    if not url
+if option == "Database":
 
-if st.button("Submit"):
-    if query:
-        with st.spinner("Thinking....."):
-            try:
-                # Generate SQL
-                sql_prompt = f"""
-                You are a SQL Expert.
+    # UI content
+    st.markdown("### Ask questions about your database in natural language.")
+    st.markdown("---")
 
-                Database Schema: 
-                employee(emp_id, name, city, salary, dept_id, job_id)
-                department(dept_id, dept_name)
-                job(job_id, job_title)
+    st.markdown("### Available Tables & Columns:")
 
-                Relationships:
-                employee.dept_id = department.dept_id
-                employee.job_id = job.job_id
+    st.markdown("""
+    - Employee --> Emp_id, Name, City, Salary, Dept_id, Job_id
+    - Department --> Dept_id, Dept_Name
+    - Job --> Job_id, Job_Title          
+    """)
+
+    st.write("- Please ask questions related to the above tables only.")
+
+    # Input Box
+    query = st.text_input("Ask your question:")
+
+    # Submit Button
+    if st.button("Submit Database Query"):
+
+        if query:
+            with st.spinner("Thinking....."):
+                try:
+                    # Generate SQL
+                    sql_prompt = f"""
+                    You are a SQL Expert.
+
+                    Database Schema: 
+                    employee(emp_id, name, city, salary, dept_id, job_id)
+                    department(dept_id, dept_name)
+                    job(job_id, job_title)
+
+                    Relationships:
+                    employee.dept_id = department.dept_id
+                    employee.job_id = job.job_id
 
 
-                Note:
-                - "location", "place", "staying" all mean city
+                    Note:
+                    - "location", "place", "staying" all mean city
 
-                Convert the following question into SQL query.
-
-                Rules:
-                - Use JOIN when needed
-                - Use only SELECT statements
-                - Do not explain anything
-                - Return only SQL query
-
-                Question: {query}
-                """
-
-                sql_query = llm.invoke(sql_prompt).content.strip()
-                sql_query = sql_query.replace("```sql", "").replace("```", "").strip()
-                sql_query = sql_query.replace('"', '').strip()
-
-                # Execute SQL
-                with engine.connect() as conn:
-                    result = conn.execute(text(sql_query))
-                    rows = result.fetchall()
-
-                # Show SQL
-                st.subheader("Generated SQL:")
-                st.code(sql_query, language="sql")
-
-                if rows:
-                    # Convert rows to list of dict
-                    data = [dict(row._mapping) for row in rows]
-
-                    # Natural Language Conversion
-                    nl_prompt = f"""
-                    You are a helpful assistant.
-
-                    Convert data result set into a natural language answer.
+                    Convert the following question into SQL query.
 
                     Rules:
-                    - Keep it short
-                    - Do not show JSON
-                    - Answer clearly
+                    - Use JOIN when needed
+                    - Use only SELECT statements
+                    - Do not explain anything
+                    - Return only SQL query
 
                     Question: {query}
-                    Data: {data}
                     """
 
-                    final_answer = llm.invoke(nl_prompt).content.strip()
+                    sql_query = llm.invoke(sql_prompt).content.strip()
+                    sql_query = sql_query.replace("```sql", "").replace("```", "").strip()
+                    sql_query = sql_query.replace('"', '').strip()
 
-                    # Show Output
-                    st.subheader("Answer:")
-                    st.write(final_answer)
+                    # Execute SQL
+                    with engine.connect() as conn:
+                        result = conn.execute(text(sql_query))
+                        rows = result.fetchall()
+
+                    # Show SQL
+                    st.subheader("Generated SQL:")
+                    st.code(sql_query, language="sql")
+
+                    if rows:
+                        # Convert rows to list of dict
+                        data = [dict(row._mapping) for row in rows]
+
+                        # Natural Language Conversion
+                        nl_prompt = f"""
+                        You are a helpful assistant.
+                        Convert data result set into a natural language answer.
+
+                        Rules:
+                        - Keep it short
+                        - Do not show JSON
+                        - Answer clearly
+
+                        Question: {query}
+                        Data: {data}
+                        """
+
+                        final_answer = llm.invoke(nl_prompt).content.strip()
+
+                        # Show Output
+                        st.subheader("Answer:")
+                        st.write(final_answer)
+
+                        # Report Generation
+                        st.divider()
+                        generate_report(rows)
+
+                    else:
+                        st.subheader("Answer:")
+                        st.info("No data found.")
+
+                except Exception as e:
+                    st.error(f"Error: {e}")
+        else:
+            st.warning("Please ask question.")
 
 
-                    # Report Generation
-                    st.divider()
-                    generate_report(rows)
+# =================================================
+# URL Mode
+# =================================================
 
-                else:
-                    st.subheader("Answer:")
-                    st.info("No data found.")
+elif option == "URL":
 
-               
-            except Exception as e:
-                st.error(f"Error: {e}")
+    st.markdown("Please enter the URL and ask questions related to it.")
+
+    url = st.input_text("Enter URL")
+    question = st.text_input("Ask your question:")
+
+    if st.button("Submit your query"):
+        if not url:
+            st.warning("Please enter the URL.")
+        elif not question:
+            st.warning("Please enter a question.")
+        else:
+            st.success("URL mode will be implemented next.")
+            
 
