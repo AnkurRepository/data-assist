@@ -143,9 +143,9 @@ elif option == "URL":
     question = st.text_input("Ask your question:")
 
     if st.button("Submit your query"):
-        if not url:
+        if not url.strip():
             st.warning("Please enter the URL.")
-        elif not question:
+        elif not question.strip():
             st.warning("Please enter a question.")
         else:
             result = process_url_query(url, question)
