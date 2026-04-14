@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from langchain.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 
 
 def extract_text(url):
