@@ -43,7 +43,7 @@ def process_url_query(url, question):
 
     # get relevant content
     filtered_content = get_relevant_content(content, question)
-    print("FILTERED:" filtered_content[:500])
+    print("FILTERED:", filtered_content[:500])
 
     llm = ChatOpenAI(temperature=0)
 
