@@ -8,7 +8,7 @@ def extract_text(url):
         response = requests.get(url, timeout=10)
         soup = BeautifulSoup(response.text, "html.parser")
 
-        paragraphs = soup.find_all("p")
+        paragraphs = soup.select("p")
         text = " ".join([p.get_text() for p in paragraphs])
 
         return text
@@ -17,16 +17,22 @@ def extract_text(url):
         return f"Error: {str(e)}"
 
 def get_relevant_content(content, question):
-    keywords = [w for w in question.lower().split() if len(w) > 3]
+    keywords = [w.lower() for w in question.split() if len(w) > 3]
 
     sentences = content.split(".")
-    relevant = []
+    scored_sentences = []
 
     for s in sentences:
-        if any(k in s.lower() for k in keywords):
-            relevant.append(s)
-            
-    return ". ".join(relevant[:10])
+        score = sum(1 for k in keywords if k in s.lower())
+        if score > 0:
+            scored_sentences.append((score, s))
+
+    # sort by relevance
+    scored_sentences.sort(reverse=True, key=lambda x: x[0])
+
+    top_sentences = [s for _, s in scored_sentences[:5]]
+
+    return ". ".join(top_sentences)
 
 
 def process_url_query(url, question):
@@ -37,6 +43,7 @@ def process_url_query(url, question):
 
     # get relevant content
     filtered_content = get_relevant_content(content, question)
+    print("FILTERED:" filtered_content[:500])
 
     llm = ChatOpenAI(temperature=0)
 
@@ -57,5 +64,7 @@ def process_url_query(url, question):
     """
 
     response = llm.invoke(prompt)
+
+ 
 
     return response.content 
