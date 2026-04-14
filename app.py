@@ -138,7 +138,7 @@ elif option == "URL":
 
     st.markdown("Please enter the URL and ask questions related to it.")
 
-    url = st.input_text("Enter URL")
+    url = st.text_input("Enter URL")
     question = st.text_input("Ask your question:")
 
     if st.button("Submit your query"):
