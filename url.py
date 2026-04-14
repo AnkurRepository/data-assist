@@ -25,11 +25,14 @@ def process_url_query(url, question):
     llm = ChatOpenAI(temperature=0)
 
     prompt = f"""
-    You are answering based on the webpage content.
+    Answer the questions ONLY using the provided content
 
     Find the exact answer from the content.
     If the answer exists, return it directly
-    Do Not say information is missing unless truly absent
+    If the answer is not found in the content, say:
+    "I could not find the answer in the provided content."
+
+    Do NOT guess or make up the answers.
 
     {content}
 
