@@ -4,6 +4,10 @@ from sqlalchemy import text
 from report import generate_report
 from db import init_db, engine # import both from db
 from url import process_url_query
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 
 # Initialize DB, Ensure DB is created BEFORE anything else
