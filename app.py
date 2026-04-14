@@ -146,9 +146,13 @@ elif option == "URL":
         if not url.strip():
             st.warning("Please enter the URL.")
         elif not question.strip():
-            st.warning("Please enter  question.")
+            st.warning("Please enter a question.")
         else:
-            result = process_url_query(url, question)
-            st.info(result)
+            with st.spinner{"Thinking...."}:
+
+                result = process_url_query(url, question)
+                
+                st.subheader("Answer:")
+                st.write(result)
             
 
