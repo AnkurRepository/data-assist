@@ -1,8 +1,9 @@
 streamlit
 openai
-langchain
-langchain-openai
-langchain-community
+langchain==0.2.16
+langchain-community==0.2.16
+langchain-openai==0.1.8
+langchain-text-splitters==0.2.4
 sqlalchemy
 pysqlite3-binary
 pyodbc
@@ -10,3 +11,5 @@ python-dotenv
 pandas
 requests
 beautifulsoup4
+faiss-cpu
+tiktoken
